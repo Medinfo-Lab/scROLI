@@ -20,7 +20,7 @@ If you prefer to build the package by hand, follow these steps:
 ```R
 git clone git@github.com:Medinfo-Lab/scMethyCA.git
 R CMD build scMethyCA
-R CMD INSTALL scMethyCA_0.1.0.tar.gz
+R CMD INSTALL scMethyCA-0.1.0.tar.gz
 ```
 
 # Usage
