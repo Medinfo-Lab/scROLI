@@ -13,6 +13,9 @@ library(VennDiagram)
 #epis data----
 SRP151137_CpG_meth_level_data <- read.csv("data/SRP151137/SRP151137_CpGgene_meth_level.csv",row.names = 1)
 SRP151137_GpC_meth_level_data <- read.csv("data/SRP151137/SRP151137_GpCgene_meth_level.csv",row.names = 1)
+SRP151137_CpG_meth_data <- read.csv("data/SRP151137/SRP151137_CpGgene_meth.csv",row.names = 1)
+SRP151137_GpC_meth_data <- read.csv("data/SRP151137/SRP151137_GpCgene_meth.csv",row.names = 1)
+
 
 SRP151137_Epis_sample <- read.csv("data/SRP151137/sample/SRP151137_CpGGpC_RNA_sample_data.csv")
 # SRP151137_Epis_sample$Run_methlevel <- paste0(SRP151137_Epis_sample$Run, ".methlevel")
@@ -20,10 +23,20 @@ SRP151137_Epis_sample <- read.csv("data/SRP151137/sample/SRP151137_CpGGpC_RNA_sa
 SRP151137_CpG_methlevel <- Read_file_meth_colname(SRP151137_CpG_meth_level_data,"methlevel")
 SRP151137_GpC_methlevel <- Read_file_meth_colname(SRP151137_GpC_meth_level_data,"methlevel")
 
+SRP151137_CpG_meth <- Read_file_meth_colname(SRP151137_CpG_meth_data,"meth")
+SRP151137_CpG_UNmeth <- Read_file_meth_colname(SRP151137_CpG_meth_data,"UNmeth")
+SRP151137_GpC_meth <- Read_file_meth_colname(SRP151137_GpC_meth_data,"meth")
+SRP151137_GpC_UNmeth <- Read_file_meth_colname(SRP151137_GpC_meth_data,"UNmeth")
+
 # CpG_GpC_sample <- intersect(colnames(SRP151137_CpG_methlevel),colnames(SRP151137_GpC_methlevel))
 
 SRP151137_CpG_methlevel_filter <- SRP151137_CpG_methlevel[,factor(SRP151137_Epis_sample$Run_methlevel)]
 SRP151137_GpC_methlevel_filter <- SRP151137_GpC_methlevel[,factor(SRP151137_Epis_sample$Run_methlevel)]
+
+SRP151137_CpG_meth_filter <- SRP151137_CpG_meth[,factor(SRP151137_Epis_sample$Run_meth)]
+SRP151137_CpG_UNmeth_filter <- SRP151137_CpG_UNmeth[,factor(SRP151137_Epis_sample$Run_UNmeth)]
+SRP151137_GpC_meth_filter <- SRP151137_GpC_meth[,factor(SRP151137_Epis_sample$Run_meth)]
+SRP151137_GpC_UNmeth_filter <- SRP151137_GpC_UNmeth[,factor(SRP151137_Epis_sample$Run_UNmeth)]
 
 # any(colnames(SRP151137_CpG_methlevel_filter)==colnames(SRP151137_GpC_methlevel_filter))
 # SRP151137_Epis_sample_filter <- SRP151137_Epis_sample %>%
@@ -32,7 +45,12 @@ SRP151137_GpC_methlevel_filter <- SRP151137_GpC_methlevel[,factor(SRP151137_Epis
 colnames(SRP151137_CpG_methlevel_filter) <- SRP151137_Epis_sample$Title
 colnames(SRP151137_GpC_methlevel_filter) <- SRP151137_Epis_sample$Title
 
+colnames(SRP151137_CpG_meth_filter) <- SRP151137_Epis_sample$Title
+colnames(SRP151137_CpG_UNmeth_filter) <- SRP151137_Epis_sample$Title
+colnames(SRP151137_GpC_meth_filter) <- SRP151137_Epis_sample$Title
+colnames(SRP151137_GpC_UNmeth_filter) <- SRP151137_Epis_sample$Title
 
+# save.image("SRP151137_plot/Gene_ALL.RData")
 
 #chr data----
 GRCm38_data <- read.csv("data/list/GRCm38_Genes.csv")
