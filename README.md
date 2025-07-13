@@ -1,4 +1,4 @@
-# scMethyCA
+# scMethyCA: Region-Based Integrated Epigenome-Transcriptome Analysis of Single-Cell
 
 Unifying DNA Methylation, Chromatin Accessibility, and Transcriptome Profiling in Single-Cell Multi-Omics via Region-Centric Integration
 
@@ -26,4 +26,48 @@ R CMD INSTALL scMethyCA-0.1.0.tar.gz
 # Usage
 
 ![workflow](https://imgur.com/dYhHZyB.png)
+
+```R
+library(scMethyCA)
+
+#First provide a coverage data, bed data and chromosome data.
+merge_coverage <- list.files(
+  coverage_path,
+  full.names = TRUE,
+  pattern = "\\.cov.gz$"
+)
+
+for (i in 1:length(merge_coverage)) {
+  lines <- readLines(merge_coverage[i], warn = FALSE)
+  # lines
+  if (length(lines)<1) {
+    message("跳过空文件: ", merge_coverage[i])
+    next
+  }
+  
+  cov_data <- read.table(merge_coverage[i])
+  b <- data.frame()
+  # 使用mclapply并行处理每个染色体
+  merge_list <- mclapply(chromosome_data, function(chr_tmp) {
+    merge_chr <- cov_to_data(merge_coverage[i], cov_data, chr_tmp, bed_data, suffixname)
+    merge_name <- paste0("merge_", chr_tmp)
+    return(list(merge_name = merge_chr))
+  }, mc.cores = 10)  # 使用的CPU核心
+  
+  b <- do.call(rbind, lapply(merge_list, function(x) x$merge_name))
+  sample_name <- colnames(b)
+  gene_data_paste[, sample_name] <- b[, sample_name]
+  
+  cat("bed data ",merge_coverage[i],'\n')
+  print(paste(i,Sys.time(),seq=""))
+}
+```
+
+
+
+
+
+
+
+
 
