@@ -41,18 +41,18 @@ for (i in 1:length(merge_coverage)) {
   lines <- readLines(merge_coverage[i], warn = FALSE)
   # lines
   if (length(lines)<1) {
-    message("跳过空文件: ", merge_coverage[i])
+    message("Skip empty files: ", merge_coverage[i])
     next
   }
   
   cov_data <- read.table(merge_coverage[i])
   b <- data.frame()
-  # 使用mclapply并行处理每个染色体
+  # Parallel processing of each chromosome using mclapply
   merge_list <- mclapply(chromosome_data, function(chr_tmp) {
     merge_chr <- cov_to_data(merge_coverage[i], cov_data, chr_tmp, bed_data, suffixname)
     merge_name <- paste0("merge_", chr_tmp)
     return(list(merge_name = merge_chr))
-  }, mc.cores = 10)  # 使用的CPU核心
+  }, mc.cores = 10)  # Number of CPU cores used
   
   b <- do.call(rbind, lapply(merge_list, function(x) x$merge_name))
   sample_name <- colnames(b)
