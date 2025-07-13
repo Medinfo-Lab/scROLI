@@ -25,4 +25,5 @@ R CMD INSTALL scMethyCA_0.1.0.tar.gz
 
 # Usage
 
-![](data\workflow.jpg)
+![workflow](https://imgur.com/dYhHZyB.png)
+
