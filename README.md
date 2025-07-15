@@ -27,7 +27,7 @@ R CMD INSTALL scMethyCA-0.1.0.tar.gz
 
 **The Workflow:**
 
-![workflow](https://imgur.com/dYhHZyB.png)
+![](https://imgur.com/a/8zgyzBf.png)
 
 ```R
 library(scMethyCA)
