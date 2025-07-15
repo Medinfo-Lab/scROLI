@@ -2,7 +2,7 @@
 
 Integrating DNA methylation, chromatin accessibility, and the transcriptome in single-cell multi-omics through region-centered, unified analysis.
 
-# Installation instructions:
+# Installation instructions
 
 ```R
 #install devtools if you don't have it already for easy installation
@@ -39,10 +39,8 @@ merge_coverage <- list.files(
   full.names = TRUE,
   pattern = "\\.cov.gz$"
 )
-bed_data <- read.table("GRCm38_Genes.csv")
-chromosome_data <- c("chr1","chr2","chr3","chr4","chr5","chr6","chr7","chr8","chr9",
-                     "chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17",
-                     "chr18","chr19","chrX","chrY")
+
+load("data/list.RData")
 bed_data <- bed_data %>% 
 	filter(chr %in% chromosome_data)
 bed_data_paste <- as.data.frame(sprintf("%s:%s-%s", bed_data$chr, bed_data$start,
