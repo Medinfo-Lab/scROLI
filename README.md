@@ -27,7 +27,11 @@ R CMD INSTALL scMethyCA-0.1.0.tar.gz
 
 **The Workflow:**
 
-![](https://imgur.com/a/8zgyzBf.png)
+![](https://imgur.com/1nkc0j8.png)
+
+**The Storage Mode Diagram:**
+
+![](https://imgur.com/wgiBpEq.png)
 
 ```R
 library(scMethyCA)
@@ -102,9 +106,7 @@ for (i in 1:length(merge_coverage)) {
 }
 ```
 
-**The Storage Mode Diagram:**
 
-![](https://imgur.com/wgiBpEq.png)
 
 
 
