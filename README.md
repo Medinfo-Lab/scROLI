@@ -1,6 +1,6 @@
 # scMethyCA: Region-Based Integrated Epigenome-Transcriptome Analysis of Single-Cell
 
-Unifying DNA Methylation, Chromatin Accessibility, and Transcriptome Profiling in Single-Cell Multi-Omics via Region-Centric Integration
+Integrating DNA methylation, chromatin accessibility, and the transcriptome in single-cell multi-omics through region-centered, unified analysis.
 
 # Installation instructions:
 
@@ -25,18 +25,33 @@ R CMD INSTALL scMethyCA-0.1.0.tar.gz
 
 # Usage
 
+**The Workflow:**
+
 ![workflow](https://imgur.com/dYhHZyB.png)
 
 ```R
 library(scMethyCA)
+library(dply)
 
-#First provide a coverage data, bed data and chromosome data.
+#First provide a coverage data, bed data and chromosome data
 merge_coverage <- list.files(
   coverage_path,
   full.names = TRUE,
   pattern = "\\.cov.gz$"
 )
+bed_data <- read.table("GRCm38_Genes.csv")
+chromosome_data <- c("chr1","chr2","chr3","chr4","chr5","chr6","chr7","chr8","chr9",
+                     "chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17",
+                     "chr18","chr19","chrX","chrY")
+bed_data <- bed_data %>% 
+	filter(chr %in% chromosome_data)
+bed_data_paste <- as.data.frame(sprintf("%s:%s-%s", bed_data$chr, bed_data$start,
+                                        bed_data$end))
+colnames(bed_data_paste) <- "chr"
+bed_data_paste_methlevel <- bed_data_paste
+bed_data_paste_meth <- bed_data_paste
 
+#site methlevel
 for (i in 1:length(merge_coverage)) {
   lines <- readLines(merge_coverage[i], warn = FALSE)
   # lines
@@ -49,23 +64,49 @@ for (i in 1:length(merge_coverage)) {
   b <- data.frame()
   # Parallel processing of each chromosome using mclapply
   merge_list <- mclapply(chromosome_data, function(chr_tmp) {
-    merge_chr <- cov_to_data(merge_coverage[i], cov_data, chr_tmp, bed_data, suffixname)
+    merge_chr <- cov_to_data(merge_coverage[i], cov_data, chr_tmp, bed_data, suffixname, "methlevel")
     merge_name <- paste0("merge_", chr_tmp)
     return(list(merge_name = merge_chr))
   }, mc.cores = 10)  # Number of CPU cores used
   
   b <- do.call(rbind, lapply(merge_list, function(x) x$merge_name))
   sample_name <- colnames(b)
-  gene_data_paste[, sample_name] <- b[, sample_name]
+  bed_data_paste_methlevel[, sample_name] <- b[, sample_name]
+  
+  cat("bed data ",merge_coverage[i],'\n')
+  print(paste(i,Sys.time(),seq=""))
+}
+                             
+#meth UNmeth
+for (i in 1:length(merge_coverage)) {
+  lines <- readLines(merge_coverage[i], warn = FALSE)
+  # lines
+  if (length(lines)<1) {
+    message("Skip empty files: ", merge_coverage[i])
+    next
+  }
+  
+  cov_data <- read.table(merge_coverage[i])
+  b <- data.frame()
+  # Parallel processing of each chromosome using mclapply
+  merge_list <- mclapply(chromosome_data, function(chr_tmp) {
+    merge_chr <- cov_to_data(merge_coverage[i], cov_data, chr_tmp, bed_data, suffixname, "meth")
+    merge_name <- paste0("merge_", chr_tmp)
+    return(list(merge_name = merge_chr))
+  }, mc.cores = 10)  # Number of CPU cores used
+  
+  b <- do.call(rbind, lapply(merge_list, function(x) x$merge_name))
+  sample_name <- colnames(b)
+  bed_data_paste_meth[, sample_name] <- b[, sample_name]
   
   cat("bed data ",merge_coverage[i],'\n')
   print(paste(i,Sys.time(),seq=""))
 }
 ```
 
+**The Storage Mode Diagram:**
 
-
-
+![](https://imgur.com/wgiBpEq.png)
 
 
 
