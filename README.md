@@ -27,7 +27,7 @@ R CMD INSTALL scMethyCA-0.1.0.tar.gz
 
 **The Workflow:**
 
-![](https://imgur.com/MTFssfj.png)
+![](https://imgur.com/UjFpJgL.png)
 
 **The Storage Mode Diagram:**
 
