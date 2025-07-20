@@ -29,9 +29,9 @@ R CMD INSTALL scMethyCA-0.1.0.tar.gz
 
 ![](https://imgur.com/UjFpJgL.png)
 
-**The Storage Mode Diagram:**
+**The Epigenomic Storage Mode Diagram:**
 
-![](https://imgur.com/wgiBpEq.png)
+![]()
 
 ```R
 library(scMethyCA)
