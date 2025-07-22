@@ -1,8 +1,8 @@
 # scMethyCA: Region-Based Integrated Epigenome-Transcriptome Analysis of Single-Cell
 
-Integrating DNA methylation, chromatin accessibility, and the transcriptome in single-cell multi-omics through region-centered, unified analysis.
-
 # Installation instructions
+
+*scMethyCA* is an R software package for the joint analysis of transcriptome, DNA methylation and chromatin open data. The package is designed to process sequencing data for NOMe-seq and can also process BS-seq data. In addition, scMethyCA can convert sequencing data into region-based data for easy storage and subsequent analysis.
 
 ```R
 #install devtools if you don't have it already for easy installation
