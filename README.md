@@ -27,11 +27,11 @@ R CMD INSTALL scMethyCA-0.1.0.tar.gz
 
 **The Workflow:**
 
-![](https://imgur.com/UjFpJgL.png)
+![](https://imgur.com/zeGHH3N.png)
 
 **The Epigenomic Storage Mode Diagram:**
 
-![]()
+![](https://imgur.com/NC8e2ua.png)
 
 ```R
 library(scMethyCA)
