@@ -36,6 +36,7 @@ R CMD INSTALL scMethyCA-0.1.0.tar.gz
 ```R
 library(scMethyCA)
 library(dply)
+library(data.table)
 
 #First provide a coverage data, bed data and chromosome data
 merge_coverage <- list.files(
@@ -55,6 +56,7 @@ bed_data_paste_meth <- bed_data_paste
 
 #site methlevel
 for (i in 1:length(merge_coverage)) {
+  start_time <- Sys.time()
   lines <- readLines(merge_coverage[i], warn = FALSE)
   # lines
   if (length(lines)<1) {
@@ -62,7 +64,7 @@ for (i in 1:length(merge_coverage)) {
     next
   }
   
-  cov_data <- read.table(merge_coverage[i])
+  cov_data <- fread(merge_coverage[i])
   b <- data.frame()
   # Parallel processing of each chromosome using mclapply
   merge_list <- mclapply(chromosome_data, function(chr_tmp) {
@@ -75,12 +77,13 @@ for (i in 1:length(merge_coverage)) {
   sample_name <- colnames(b)
   bed_data_paste_methlevel[, sample_name] <- b[, sample_name]
   
-  cat("bed data ",merge_coverage[i],'\n')
-  print(paste(i,Sys.time(),seq=""))
+  cat(i,"bed data ",merge_coverage[i],'\n')
+  cat("文件处理耗时:", round(Sys.time() - start_time, 1), "秒\n")
 }
                              
 #meth UNmeth
 for (i in 1:length(merge_coverage)) {
+  start_time <- Sys.time()
   lines <- readLines(merge_coverage[i], warn = FALSE)
   # lines
   if (length(lines)<1) {
@@ -88,7 +91,7 @@ for (i in 1:length(merge_coverage)) {
     next
   }
   
-  cov_data <- read.table(merge_coverage[i])
+  cov_data <- fread(merge_coverage[i])
   b <- data.frame()
   # Parallel processing of each chromosome using mclapply
   merge_list <- mclapply(chromosome_data, function(chr_tmp) {
@@ -101,8 +104,8 @@ for (i in 1:length(merge_coverage)) {
   sample_name <- colnames(b)
   bed_data_paste_meth[, sample_name] <- b[, sample_name]
   
-  cat("bed data ",merge_coverage[i],'\n')
-  print(paste(i,Sys.time(),seq=""))
+  cat(i,"bed data ",merge_coverage[i],'\n')
+  cat("文件处理耗时:", round(Sys.time() - start_time, 1), "秒\n")
 }
 ```
 
