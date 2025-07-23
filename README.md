@@ -31,11 +31,11 @@ R CMD INSTALL scMethyCA-0.1.0.tar.gz
 
 **The Epigenomic Processing Flow:**
 
-![](https://imgur.com/HJrhZHt.png)
+![](https://imgur.com/NaEhVVY.png)
 
 **The Transcriptomic Processing Flow:**
 
-![](https://imgur.com/IFlznI3.png)
+![](https://imgur.com/zc2ysWZ.png)
 
 ```R
 library(scMethyCA)
