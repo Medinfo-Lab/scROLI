@@ -10,7 +10,7 @@
 #install devtools if you don't have it already for easy installation
 install.packages("devtools")
 library(devtools)
-install_github("Medinfo-Lab/scMethyCA")
+install_github("Medinfo-Lab/scROLI")
 ```
 
 If you prefer to build the package by hand, follow these steps:
@@ -20,7 +20,7 @@ If you prefer to build the package by hand, follow these steps:
 - Download and build from source:
 
 ```R
-git clone git@github.com:Medinfo-Lab/scMethyCA.git
+git clone git@github.com:Medinfo-Lab/scROLI.git
 R CMD build scMethyCA
 R CMD INSTALL scMethyCA-0.1.0.tar.gz
 ```
