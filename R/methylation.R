@@ -80,7 +80,7 @@ QC_meth_unmeth <- function(file_tmp,flag="col"){
 #'
 #' @examples
 Cov_to_data <- function(cov_file, cov_file_data, chr_tmp, region, suffixname, datatmp) {
-  region_chr <- region %>% filter(chr == chr_tmp)
+  region_chr <- region %>% filter(chr %in% chr_tmp)
   region_chr_paste <- sprintf("%s:%s-%s", region_chr$chr, region_chr$start, region_chr$end)
   region_chr_paste <- as.data.frame(region_chr_paste)
   colnames(region_chr_paste) <- "chr"
@@ -88,7 +88,7 @@ Cov_to_data <- function(cov_file, cov_file_data, chr_tmp, region, suffixname, da
   cov_data <- cov_file_data
   colnames(cov_data) <- c("chr", "start", "end", "methlevel", "meth", "UNmeth")
 
-  cov_data_chr <- cov_data %>% filter(chr == chr_tmp)
+  cov_data_chr <- cov_data %>% filter(chr %in% chr_tmp)
 
 
   if(datatmp=="meth"){
