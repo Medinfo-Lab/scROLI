@@ -84,7 +84,7 @@ for (i in 1:length(merge_coverage)) {
   sample_name <- colnames(b)
   bed_data_paste_methlevel[, sample_name] <- b[, sample_name]
   cat(i,"bed data ",merge_coverage[i],'\n')
-  cat("文件处理耗时:", round(Sys.time() - start_time, 1), "秒\n")
+  cat("File processing time:", round(Sys.time() - start_time, 1), "秒\n")
 }
                              
 #meth UNmeth
@@ -110,7 +110,7 @@ for (i in 1:length(merge_coverage)) {
   sample_name <- colnames(b)
   bed_data_paste_meth[, sample_name] <- b[, sample_name]
   cat(i,"bed data ",merge_coverage[i],'\n')
-  cat("文件处理耗时:", round(Sys.time() - start_time, 1), "秒\n")
+  cat("File processing time:", round(Sys.time() - start_time, 1), "秒\n")
 }
 ```
 
