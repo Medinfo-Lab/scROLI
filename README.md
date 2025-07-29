@@ -1,16 +1,16 @@
-# scRCETF
+# sciTEA: Single-Cell Integrative Transcriptomic & Epigenomic Analysis
 
 # Installation instructions
 
-*scRCETF: A **R**egion-**C**entric **F**ramework for Integrative Analysis of **S**ingle-**C**ell **E**pigenomic and **T**ranscriptomic Data*
+*sciTEA: A Region-Centric Framework for Integrative Analysis of Single-Cell Epigenomic and Transcriptomic Data.* 
 
-*scRCETF* is an R software package for the joint analysis of transcriptome, DNA methylation and chromatin open data. The package is designed to process sequencing data for NOMe-seq and can also process BS-seq data. In addition, scRCETF can convert sequencing data into region-based data for easy storage and subsequent analysis.
+***sciTEA*** is an R software package for the joint analysis of transcriptome, DNA methylation and chromatin open data. The package is designed to process sequencing data for NOMe-seq and can also process BS-seq data. In addition, ***sciTEA*** can convert sequencing data into region-based data for easy storage and subsequent analysis.
 
 ```R
 #install devtools if you don't have it already for easy installation
 install.packages("devtools")
 library(devtools)
-install_github("Medinfo-Lab/scRCETF")
+install_github("Medinfo-Lab/sciTEA")
 ```
 
 If you prefer to build the package by hand, follow these steps:
@@ -20,16 +20,16 @@ If you prefer to build the package by hand, follow these steps:
 - Download and build from source:
 
 ```R
-git clone git@github.com:Medinfo-Lab/scROLI.git
-R CMD build scRCETF
-R CMD INSTALL scRCETF-0.1.0.tar.gz
+git clone git@github.com:Medinfo-Lab/sciTEA.git
+R CMD build sciTEA
+R CMD INSTALL sciTEA-0.1.0.tar.gz
 ```
 
 # Usage
 
 **The Workflow:**
 
-![](https://imgur.com/ueQ4rLU.png)
+![](https://imgur.com/hesjtLb.png)
 
 **The Epigenomic Processing Flow:**
 
@@ -40,7 +40,7 @@ R CMD INSTALL scRCETF-0.1.0.tar.gz
 ![](https://imgur.com/gVY0VJ0.png)
 
 ```R
-library(scRCETF)
+library(sciTEA)
 library(dply)
 library(data.table)
 
@@ -59,6 +59,7 @@ bed_data_paste <- as.data.frame(sprintf("%s:%s-%s", bed_data$chr, bed_data$start
 colnames(bed_data_paste) <- "chr"
 bed_data_paste_methlevel <- bed_data_paste
 bed_data_paste_meth <- bed_data_paste
+CPU_cores <- 10
 
 #site methlevel
 for (i in 1:length(merge_coverage)) {
@@ -77,12 +78,11 @@ for (i in 1:length(merge_coverage)) {
     merge_chr <- cov_to_data(merge_coverage[i], cov_data, chr_tmp, bed_data, suffixname, "methlevel")
     merge_name <- paste0("merge_", chr_tmp)
     return(list(merge_name = merge_chr))
-  }, mc.cores = 10)  # Number of CPU cores used
+  }, mc.cores = CPU_cores)  # Number of CPU cores used
   
   b <- do.call(rbind, lapply(merge_list, function(x) x$merge_name))
   sample_name <- colnames(b)
   bed_data_paste_methlevel[, sample_name] <- b[, sample_name]
-  
   cat(i,"bed data ",merge_coverage[i],'\n')
   cat("文件处理耗时:", round(Sys.time() - start_time, 1), "秒\n")
 }
@@ -104,12 +104,11 @@ for (i in 1:length(merge_coverage)) {
     merge_chr <- cov_to_data(merge_coverage[i], cov_data, chr_tmp, bed_data, suffixname, "meth")
     merge_name <- paste0("merge_", chr_tmp)
     return(list(merge_name = merge_chr))
-  }, mc.cores = 10)  # Number of CPU cores used
+  }, mc.cores = CPU_cores)  # Number of CPU cores used
   
   b <- do.call(rbind, lapply(merge_list, function(x) x$merge_name))
   sample_name <- colnames(b)
   bed_data_paste_meth[, sample_name] <- b[, sample_name]
-  
   cat(i,"bed data ",merge_coverage[i],'\n')
   cat("文件处理耗时:", round(Sys.time() - start_time, 1), "秒\n")
 }
