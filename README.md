@@ -4,7 +4,7 @@
 
 *scRCETF: A **R**egion-**C**entric **F**ramework for Integrative Analysis of **S**ingle-**C**ell **E**pigenomic and **T**ranscriptomic Data*
 
-*scROLI* is an R software package for the joint analysis of transcriptome, DNA methylation and chromatin open data. The package is designed to process sequencing data for NOMe-seq and can also process BS-seq data. In addition, scROLI can convert sequencing data into region-based data for easy storage and subsequent analysis.
+*scRCETF* is an R software package for the joint analysis of transcriptome, DNA methylation and chromatin open data. The package is designed to process sequencing data for NOMe-seq and can also process BS-seq data. In addition, scRCETF can convert sequencing data into region-based data for easy storage and subsequent analysis.
 
 ```R
 #install devtools if you don't have it already for easy installation
@@ -40,7 +40,7 @@ R CMD INSTALL scRCETF-0.1.0.tar.gz
 ![](https://imgur.com/gVY0VJ0.png)
 
 ```R
-library(scMethyCA)
+library(scRCETF)
 library(dply)
 library(data.table)
 
