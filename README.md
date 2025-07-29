@@ -1,8 +1,8 @@
-# scROLI
+# scRCETF
 
 # Installation instructions
 
-*scROLI: An R Package for* ***R**egion-**O**rdered Multi-Omics **L**inkage and **I**ntegration for **S**ingle **C**ells*
+*scRCETF: A **R**egion-**C**entric **F**ramework for Integrative Analysis of **S**ingle-**C**ell **E**pigenomic and **T**ranscriptomic Data*
 
 *scROLI* is an R software package for the joint analysis of transcriptome, DNA methylation and chromatin open data. The package is designed to process sequencing data for NOMe-seq and can also process BS-seq data. In addition, scROLI can convert sequencing data into region-based data for easy storage and subsequent analysis.
 
@@ -10,7 +10,7 @@
 #install devtools if you don't have it already for easy installation
 install.packages("devtools")
 library(devtools)
-install_github("Medinfo-Lab/scROLI")
+install_github("Medinfo-Lab/scRCETF")
 ```
 
 If you prefer to build the package by hand, follow these steps:
@@ -21,8 +21,8 @@ If you prefer to build the package by hand, follow these steps:
 
 ```R
 git clone git@github.com:Medinfo-Lab/scROLI.git
-R CMD build scMethyCA
-R CMD INSTALL scMethyCA-0.1.0.tar.gz
+R CMD build scRCETF
+R CMD INSTALL scRCETF-0.1.0.tar.gz
 ```
 
 # Usage
