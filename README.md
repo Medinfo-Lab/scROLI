@@ -29,7 +29,7 @@ R CMD INSTALL scRCETF-0.1.0.tar.gz
 
 **The Workflow:**
 
-![](https://imgur.com/CO92ngt.png)
+![](https://imgur.com/ueQ4rLU.png)
 
 **The Epigenomic Processing Flow:**
 
