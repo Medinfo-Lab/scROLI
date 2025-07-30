@@ -22,7 +22,7 @@ If you prefer to build the package by hand, follow these steps:
 ```R
 git clone git@github.com:Medinfo-Lab/sciTEA.git
 R CMD build sciTEA
-R CMD INSTALL sciTEA-0.1.0.tar.gz
+R CMD INSTALL sciTEA-0.1.2.tar.gz
 ```
 
 # Usage
