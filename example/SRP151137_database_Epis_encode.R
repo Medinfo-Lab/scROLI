@@ -12,20 +12,10 @@ library(clusterProfiler)
 library(enrichplot)
 
 
-#fisher
-SRP151137_CpG_DEG_E4.5 <- read.csv("SRP151137_plot/encode_fisher_DEG/CpG/E4.5_DEG.csv")
-SRP151137_CpG_DEG_E5.5 <- read.csv("SRP151137_plot/encode_fisher_DEG/CpG/E5.5_DEG.csv")
-SRP151137_CpG_DEG_E6.5 <- read.csv("SRP151137_plot/encode_fisher_DEG/CpG/E6.5_DEG.csv")
-
-SRP151137_GpC_DEG_E4.5 <- read.csv("SRP151137_plot/encode_fisher_DEG/GpC/E4.5_DEG.csv")
-SRP151137_GpC_DEG_E5.5 <- read.csv("SRP151137_plot/encode_fisher_DEG/GpC/E5.5_DEG.csv")
-SRP151137_GpC_DEG_E6.5 <- read.csv("SRP151137_plot/encode_fisher_DEG/GpC/E6.5_DEG.csv")
-
-
 
 #epis data----
-SRP151137_CpG_meth_level_data <- read.csv("data/SRP151137/SRP151137_CpGencode_meth_level.csv",row.names = 1)
-SRP151137_GpC_meth_level_data <- read.csv("data/SRP151137/SRP151137_GpCencode_meth_level.csv",row.names = 1)
+SRP151137_CpG_meth_level_data <- read.csv("data/SRP151137/SRP151137_CpGencode_methlevel.csv",row.names = 1)
+SRP151137_GpC_meth_level_data <- read.csv("data/SRP151137/SRP151137_GpCencode_methlevel.csv",row.names = 1)
 SRP151137_CpG_meth_data <- read.csv("data/SRP151137/SRP151137_CpGencode_meth.csv",row.names = 1)
 SRP151137_GpC_meth_data <- read.csv("data/SRP151137/SRP151137_GpCencode_meth.csv",row.names = 1)
 
@@ -244,6 +234,9 @@ SRP151137_CpG_DEG_E4.5 <- fisher_DEG_process(
   SRP151137_CpG_UNmeth_filter,
   SRP151137_Epis_sample,
   "E4.5")
+SRP151137_CpG_DEG_E4.5_diff_data <- methlevel_diff(SRP151137_CpG_methlevel_filter,SRP151137_Epis_sample,"E4.5")
+SRP151137_CpG_DEG_E4.5 <- cbind(SRP151137_CpG_DEG_E4.5,SRP151137_CpG_DEG_E4.5_diff_data)
+
 SRP151137_CpG_DEG_E4.5$chr <- rownames(SRP151137_CpG_DEG_E4.5)
 # SRP151137_CpG_DEG_E4.5$genename <- GRCm38_data_paste$genename
 
@@ -253,6 +246,9 @@ SRP151137_CpG_DEG_E5.5 <- fisher_DEG_process(
   SRP151137_CpG_UNmeth_filter,
   SRP151137_Epis_sample,
   "E5.5")
+SRP151137_CpG_DEG_E5.5_diff_data <- methlevel_diff(SRP151137_CpG_methlevel_filter,SRP151137_Epis_sample,"E5.5")
+SRP151137_CpG_DEG_E5.5 <- cbind(SRP151137_CpG_DEG_E5.5,SRP151137_CpG_DEG_E5.5_diff_data)
+
 SRP151137_CpG_DEG_E5.5$chr <- rownames(SRP151137_CpG_DEG_E5.5)
 # SRP151137_CpG_DEG_E5.5$genename <- GRCm38_data_paste$genename
 
@@ -262,6 +258,9 @@ SRP151137_CpG_DEG_E6.5 <- fisher_DEG_process(
   SRP151137_CpG_UNmeth_filter,
   SRP151137_Epis_sample,
   "E6.5")
+SRP151137_CpG_DEG_E6.5_diff_data <- methlevel_diff(SRP151137_CpG_methlevel_filter,SRP151137_Epis_sample,"E6.5")
+SRP151137_CpG_DEG_E6.5 <- cbind(SRP151137_CpG_DEG_E6.5,SRP151137_CpG_DEG_E6.5_diff_data)
+
 SRP151137_CpG_DEG_E6.5$chr <- rownames(SRP151137_CpG_DEG_E6.5)
 # SRP151137_CpG_DEG_E6.5$genename <- GRCm38_data_paste$genename
 
@@ -384,6 +383,9 @@ SRP151137_GpC_DEG_E4.5 <- fisher_DEG_process(
   SRP151137_GpC_UNmeth_filter,
   SRP151137_Epis_sample,
   "E4.5")
+SRP151137_GpC_DEG_E4.5_diff_data <- methlevel_diff(SRP151137_GpC_methlevel_filter,SRP151137_Epis_sample,"E4.5")
+SRP151137_GpC_DEG_E4.5 <- cbind(SRP151137_GpC_DEG_E4.5,SRP151137_GpC_DEG_E4.5_diff_data)
+
 SRP151137_GpC_DEG_E4.5$chr <- rownames(SRP151137_GpC_DEG_E4.5)
 # SRP151137_GpC_DEG_E4.5$genename <- GRCm38_data_paste$genename
 
@@ -393,6 +395,9 @@ SRP151137_GpC_DEG_E5.5 <- fisher_DEG_process(
   SRP151137_GpC_UNmeth_filter,
   SRP151137_Epis_sample,
   "E5.5")
+SRP151137_GpC_DEG_E5.5_diff_data <- methlevel_diff(SRP151137_GpC_methlevel_filter,SRP151137_Epis_sample,"E5.5")
+SRP151137_GpC_DEG_E5.5 <- cbind(SRP151137_GpC_DEG_E5.5,SRP151137_GpC_DEG_E5.5_diff_data)
+
 SRP151137_GpC_DEG_E5.5$chr <- rownames(SRP151137_GpC_DEG_E5.5)
 # SRP151137_GpC_DEG_E5.5$genename <- GRCm38_data_paste$genename
 
@@ -402,6 +407,9 @@ SRP151137_GpC_DEG_E6.5 <- fisher_DEG_process(
   SRP151137_GpC_UNmeth_filter,
   SRP151137_Epis_sample,
   "E6.5")
+SRP151137_GpC_DEG_E6.5_diff_data <- methlevel_diff(SRP151137_GpC_methlevel_filter,SRP151137_Epis_sample,"E6.5")
+SRP151137_GpC_DEG_E6.5 <- cbind(SRP151137_GpC_DEG_E6.5,SRP151137_GpC_DEG_E6.5_diff_data)
+
 SRP151137_GpC_DEG_E6.5$chr <- rownames(SRP151137_GpC_DEG_E6.5)
 # SRP151137_GpC_DEG_E6.5$genename <- GRCm38_data_paste$genename
 
@@ -669,9 +677,6 @@ dotplot(ego,
 
 
 #Calinski-Harabasz----
-SRP151137_CpG_umap_data <- read.csv("SRP151137_plot/encode_data/SRP151137_CpGencode_umap_data.csv")
-SRP151137_GpC_umap_data <- read.csv("SRP151137_plot/encode_data/SRP151137_GpCencode_umap_data.csv")
-
 data <- SRP151137_GpC_umap_data
 
 coords <- data[, c("UMAP1", "UMAP2")]

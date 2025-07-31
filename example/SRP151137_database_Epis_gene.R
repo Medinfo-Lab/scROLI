@@ -12,12 +12,14 @@ library(ggrepel)
 library(fpc)
 library(cluster)
 library(data.table)
+library(clusterProfiler)
+
 
 
 
 #epis data----
-SRP151137_CpG_meth_level_data <- read.csv("data/SRP151137/SRP151137_CpGgene_meth_level.csv",row.names = 1)
-SRP151137_GpC_meth_level_data <- read.csv("data/SRP151137/SRP151137_GpCgene_meth_level.csv",row.names = 1)
+SRP151137_CpG_meth_level_data <- read.csv("data/SRP151137/SRP151137_CpGgene_methlevel.csv",row.names = 1)
+SRP151137_GpC_meth_level_data <- read.csv("data/SRP151137/SRP151137_GpCgene_methlevel.csv",row.names = 1)
 SRP151137_CpG_meth_data <- read.csv("data/SRP151137/SRP151137_CpGgene_meth.csv",row.names = 1)
 SRP151137_GpC_meth_data <- read.csv("data/SRP151137/SRP151137_GpCgene_meth.csv",row.names = 1)
 
@@ -194,7 +196,7 @@ ggplot(SRP151137_GpC_umap_data)+
                      values = c("#761C78","#5B6C2F","#4682B4"))
 
 
-# save.image("SRP151137_plot/Gene_All_MOFA.RData")
+# save.image("SRP151137_plot/Gene_fisher_DEG.RData")
 
 #CpG DEG----
 SRP151137_CpG_DEG <- Methlevel_group_variance_analysis(SRP151137_CpG_methlevel_choose_mean,SRP151137_Epis_sample$group1)
@@ -207,32 +209,43 @@ SRP151137_CpG_DEG_gene <- merge(
 )
 
 
-
+#CpG E4.5
 SRP151137_CpG_DEG_E4.5 <- fisher_DEG_process(
   SRP151137_CpG_meth_filter,
   SRP151137_CpG_UNmeth_filter,
   SRP151137_Epis_sample,
   "E4.5")
+CpGE4.5_methlevel_diff_data <- methlevel_diff(SRP151137_CpG_methlevel_filter,SRP151137_Epis_sample,"E4.5")
+SRP151137_CpG_DEG_E4.5 <- cbind(SRP151137_CpG_DEG_E4.5,CpGE4.5_methlevel_diff_data)
+
 SRP151137_CpG_DEG_E4.5$chr <- rownames(SRP151137_CpG_DEG_E4.5)
 SRP151137_CpG_DEG_E4.5$geneid <- GRCm38_data_paste$geneid
 SRP151137_CpG_DEG_E4.5$genename <- GRCm38_data_paste$genename
 
 
+#CpG E5.5
 SRP151137_CpG_DEG_E5.5 <- fisher_DEG_process(
   SRP151137_CpG_meth_filter,
   SRP151137_CpG_UNmeth_filter,
   SRP151137_Epis_sample,
   "E5.5")
+CpGE5.5_methlevel_diff_data <- methlevel_diff(SRP151137_CpG_methlevel_filter,SRP151137_Epis_sample,"E5.5")
+SRP151137_CpG_DEG_E5.5 <- cbind(SRP151137_CpG_DEG_E5.5,CpGE5.5_methlevel_diff_data)
+
 SRP151137_CpG_DEG_E5.5$chr <- rownames(SRP151137_CpG_DEG_E5.5)
 SRP151137_CpG_DEG_E5.5$geneid <- GRCm38_data_paste$geneid
 SRP151137_CpG_DEG_E5.5$genename <- GRCm38_data_paste$genename
 
 
+#CpG E6.5
 SRP151137_CpG_DEG_E6.5 <- fisher_DEG_process(
   SRP151137_CpG_meth_filter,
   SRP151137_CpG_UNmeth_filter,
   SRP151137_Epis_sample,
   "E6.5")
+CpGE6.5_methlevel_diff_data <- methlevel_diff(SRP151137_CpG_methlevel_filter,SRP151137_Epis_sample,"E6.5")
+SRP151137_CpG_DEG_E6.5 <- cbind(SRP151137_CpG_DEG_E6.5,CpGE6.5_methlevel_diff_data)
+
 SRP151137_CpG_DEG_E6.5$chr <- rownames(SRP151137_CpG_DEG_E6.5)
 SRP151137_CpG_DEG_E6.5$geneid <- GRCm38_data_paste$geneid
 SRP151137_CpG_DEG_E6.5$genename <- GRCm38_data_paste$genename
@@ -357,31 +370,44 @@ SRP151137_GpC_DEG_gene <- merge(
   all.x = TRUE
 )
 
+
+#GpC E4.5
 SRP151137_GpC_DEG_E4.5 <- fisher_DEG_process(
   SRP151137_GpC_meth_filter,
   SRP151137_GpC_UNmeth_filter,
   SRP151137_Epis_sample,
   "E4.5")
+GpCE4.5_methlevel_diff_data <- methlevel_diff(SRP151137_GpC_methlevel_filter,SRP151137_Epis_sample,"E4.5")
+SRP151137_GpC_DEG_E4.5 <- cbind(SRP151137_GpC_DEG_E4.5,GpCE4.5_methlevel_diff_data)
+
 SRP151137_GpC_DEG_E4.5$chr <- rownames(SRP151137_GpC_DEG_E4.5)
 SRP151137_GpC_DEG_E4.5$geneid <- GRCm38_data_paste$geneid
 SRP151137_GpC_DEG_E4.5$genename <- GRCm38_data_paste$genename
 
 
+#GpC E5.5
 SRP151137_GpC_DEG_E5.5 <- fisher_DEG_process(
   SRP151137_GpC_meth_filter,
   SRP151137_GpC_UNmeth_filter,
   SRP151137_Epis_sample,
   "E5.5")
+GpCE5.5_methlevel_diff_data <- methlevel_diff(SRP151137_GpC_methlevel_filter,SRP151137_Epis_sample,"E5.5")
+SRP151137_GpC_DEG_E5.5 <- cbind(SRP151137_GpC_DEG_E5.5,GpCE5.5_methlevel_diff_data)
+
 SRP151137_GpC_DEG_E5.5$chr <- rownames(SRP151137_GpC_DEG_E5.5)
 SRP151137_GpC_DEG_E5.5$geneid <- GRCm38_data_paste$geneid
 SRP151137_GpC_DEG_E5.5$genename <- GRCm38_data_paste$genename
 
 
+#GpC E6.5
 SRP151137_GpC_DEG_E6.5 <- fisher_DEG_process(
   SRP151137_GpC_meth_filter,
   SRP151137_GpC_UNmeth_filter,
   SRP151137_Epis_sample,
   "E6.5")
+GpCE6.5_methlevel_diff_data <- methlevel_diff(SRP151137_GpC_methlevel_filter,SRP151137_Epis_sample,"E6.5")
+SRP151137_GpC_DEG_E6.5 <- cbind(SRP151137_GpC_DEG_E6.5,GpCE6.5_methlevel_diff_data)
+
 SRP151137_GpC_DEG_E6.5$chr <- rownames(SRP151137_GpC_DEG_E6.5)
 SRP151137_GpC_DEG_E6.5$geneid <- GRCm38_data_paste$geneid
 SRP151137_GpC_DEG_E6.5$genename <- GRCm38_data_paste$genename
@@ -473,7 +499,8 @@ SRP151137_E4.5_diff_data_choose <- SRP151137_E4.5_diff_data %>%
 SRP151137_E4.5_diff_data_choose$top10  <- FALSE
 SRP151137_E4.5_diff_data_choose$top10[1:10] <- TRUE  # 前10行标记为TRUE
 SRP151137_E4.5_diff_data_choose_p <- SRP151137_E4.5_diff_data_choose %>%
-  filter(CpG_p.value <= 0.5 & GpC_p.value <= 0.5)
+  # filter(CpG_p.value <= 0.5 & GpC_p.value <= 0.5)
+  filter(avg_value <= 0.5)
 
 
 SRP151137_E5.5_diff_data <- gene_DEG_diff_plot(SRP151137_CpG_DEG_E5.5,SRP151137_GpC_DEG_E5.5)
@@ -483,7 +510,8 @@ SRP151137_E5.5_diff_data_choose <- SRP151137_E5.5_diff_data %>%
 SRP151137_E5.5_diff_data_choose$top10  <- FALSE
 SRP151137_E5.5_diff_data_choose$top10[1:10] <- TRUE  # 前10行标记为TRUE
 SRP151137_E5.5_diff_data_choose_p <- SRP151137_E5.5_diff_data_choose %>%
-  filter(CpG_p.value <= 0.5 & GpC_p.value <= 0.5)
+  # filter(CpG_p.value <= 0.5 & GpC_p.value <= 0.5)
+  filter(avg_value <= 0.5)
 
 
 SRP151137_E6.5_diff_data <- gene_DEG_diff_plot(SRP151137_CpG_DEG_E6.5,SRP151137_GpC_DEG_E6.5)
@@ -493,9 +521,12 @@ SRP151137_E6.5_diff_data_choose <- SRP151137_E6.5_diff_data %>%
 SRP151137_E6.5_diff_data_choose$top10  <- FALSE
 SRP151137_E6.5_diff_data_choose$top10[1:10] <- TRUE  # 前10行标记为TRUE
 SRP151137_E6.5_diff_data_choose_p <- SRP151137_E6.5_diff_data_choose %>%
-  filter(CpG_p.value <= 0.5 & GpC_p.value <= 0.5)
+  # filter(CpG_p.value <= 0.5 & GpC_p.value <= 0.5)
+  filter(avg_value <= 0.5)
 
-# load("SRP151137_plot/Gene_fisher_DEG.RData")
+# save.image("SRP151137_plot/Gene_fisher_DEG.RData")
+
+
 
 ggplot_data <- SRP151137_E4.5_diff_data_choose_p
 
@@ -508,7 +539,7 @@ ggplot(data = ggplot_data,mapping = aes(x = CpG_rate_diff, y = GpC_rate_diff))+
   geom_vline(xintercept = 0, color = "#FF7F00", linetype = "dashed") +  # 垂直参考线（x=50）
   geom_hline(yintercept = 0, color = "#FF7F00", linetype = "dashed")+   # 水平参考线（y=50）
   labs(x = "Differential methylation (%)",y = "Differential accessibility (%)",
-       title = "E6.5 Gene Differential")+
+       title = "E4.5 Gene Differential")+
   theme(legend.title=element_blank(),
         # plot.title = element_text(hjust = 0.5,size = 18,face = "bold"),
         plot.title = element_textbox(
@@ -619,7 +650,7 @@ ggplot(SRP151137_GpC_methlevel_choose_colmean,
 
 #Venn genes----
 load("SRP151137_plot/RNA_markers.RData")
-load("SRP151137_plot/Gene_All_Meth.RData")
+# load("SRP151137_plot/Gene_All_Meth.RData")
 
 SRP151137_pbmc_markers_E4.5 <- SRP151137_pbmc_markers_result %>%
   filter(cluster == "E4.5")
@@ -639,9 +670,9 @@ SRP151137_pbmc_markers_E6.5_P <- SRP151137_pbmc_markers_E6.5 %>%
 SRP151137_CpG_DEG_E4.5_venn <- SRP151137_CpG_DEG_E4.5 %>%
   filter(P.value <= 5e-40)
 SRP151137_CpG_DEG_E5.5_venn <- SRP151137_CpG_DEG_E5.5 %>%
-  filter(P.value <= 5e-5)
+  filter(P.value <= 5e-4)
 SRP151137_CpG_DEG_E6.5_venn <- SRP151137_CpG_DEG_E6.5 %>%
-  filter(P.value <= 5e-25)
+  filter(P.value <= 5e-20)
 
 
 SRP151137_GpC_DEG_E4.5_venn <- SRP151137_GpC_DEG_E4.5 %>%
@@ -651,10 +682,12 @@ SRP151137_GpC_DEG_E5.5_venn <- SRP151137_GpC_DEG_E5.5 %>%
 SRP151137_GpC_DEG_E6.5_venn <- SRP151137_GpC_DEG_E6.5 %>%
   filter(P.value <= 0.5)
 
+
+#ggplot venn
 genes <- list(
-  RNA_Gene = SRP151137_pbmc_markers_E6.5$Geneid2,
-  CpG_Gene = SRP151137_CpG_DEG_E6.5_venn$geneid,
-  GpC_Gene = SRP151137_GpC_DEG_E6.5_venn$geneid
+  RNA_Gene = SRP151137_pbmc_markers_E4.5$Geneid2,
+  CpG_Gene = SRP151137_CpG_DEG_E4.5_venn$geneid,
+  GpC_Gene = SRP151137_GpC_DEG_E4.5_venn$geneid
 )
 
 ggVennDiagram(genes,
@@ -675,22 +708,26 @@ for (i in 1:nrow(inter)) {
   inter[i,'Genes'] <- paste(inter[[i,'..values..']], collapse=", ")
 }
 
-venn_genes <- inter$Genes[5]
+venn_genes <- inter$Genes[1]
 venn_genes <- unlist(strsplit(venn_genes, ","))
+# write.csv(venn_genes,"SRP151137_plot/RNA_gene/E4.5_CpG_RNA.genes.csv")
 
 
-venn_DEG_genes <- bitr(venn_genes,
-                       fromType = "SYMBOL",
-                       toType = "ENTREZID",
-                       OrgDb = org.Mm.eg.db)
+# venn_DEG_genes <- bitr(venn_genes,
+#                        fromType = "SYMBOL",
+#                        toType = "ENTREZID",
+#                        OrgDb = org.Mm.eg.db)
 
-ego <- enrichGO(gene = venn_DEG_genes$ENTREZID,
+ego <- enrichGO(gene = venn_genes,
                 OrgDb = org.Mm.eg.db,
+                keyType = "ENSEMBL",
                 ont = "ALL",        # "BP","MF","CC"或"ALL"
                 pAdjustMethod = "BH",         # 校正方法：BH, bonferroni等
                 pvalueCutoff = 0.05,         # 显著阈值
                 qvalueCutoff = 0.05,
                 readable = TRUE)         # 转换ID为基因名
+ego_data <- ego@result
+
 
 dotplot(ego,
         showCategory=10,         # 显示top15条目
@@ -719,12 +756,12 @@ ch_index
 CH_SC <- read.csv("SRP151137_plot/encode_gene/CH_SC.csv")
 
 ggplot(CH_SC, aes(x = type, y = CH.value)) +
-  geom_bar(stat = "identity", position = position_dodge(0.8), width = 0.7, fill = "#4E79A7")+
+  geom_bar(stat = "identity", position = position_dodge(0.8), width = 0.5, fill = "#4E79A7")+
   # geom_col(position = "dodge")+
   geom_text(aes(label = round(CH.value, 2)),
             position = position_dodge(0.8),
             vjust = -0.5,
-            size = 3) +
+            size = 4) +
   # scale_fill_manual(values = c("CpG.ENCODE" = "#4E79A7", "GpC.ENCODE" = "#F28E2B",
   #                              "CpG.Gene" = "#5B6C2F", "GpC.Gene" = "#761C78")) +
   theme_minimal()+
@@ -770,12 +807,12 @@ cat("平均轮廓系数:", avg_sil_width, "\n")
 CH_SC <- read.csv("SRP151137_plot/CH_SC.csv")
 
 ggplot(CH_SC, aes(x = type, y = SC.value)) +
-  geom_bar(stat = "identity", position = position_dodge(0.8), width = 0.7, fill = "#4E79A7")+
+  geom_bar(stat = "identity", position = position_dodge(0.8), width = 0.5, fill = "#4E79A7")+
   # geom_col(position = "dodge")+
   geom_text(aes(label = round(SC.value, 2)),
             position = position_dodge(0.8),
             vjust = -0.5,
-            size = 3) +
+            size = 4) +
   # scale_fill_manual(values = c("CpG.ENCODE" = "#4E79A7", "GpC.ENCODE" = "#F28E2B",
   #                              "CpG.Gene" = "#5B6C2F", "GpC.Gene" = "#761C78")) +
   theme_minimal()+
