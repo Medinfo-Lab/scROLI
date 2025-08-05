@@ -499,8 +499,7 @@ SRP151137_E4.5_diff_data_choose <- SRP151137_E4.5_diff_data %>%
 SRP151137_E4.5_diff_data_choose$top10  <- FALSE
 SRP151137_E4.5_diff_data_choose$top10[1:10] <- TRUE  # 前10行标记为TRUE
 SRP151137_E4.5_diff_data_choose_p <- SRP151137_E4.5_diff_data_choose %>%
-  # filter(CpG_p.value <= 0.5 & GpC_p.value <= 0.5)
-  filter(avg_value <= 0.5)
+  filter(avg_value <= 0.05 & logFC > 0)
 
 
 SRP151137_E5.5_diff_data <- gene_DEG_diff_plot(SRP151137_CpG_DEG_E5.5,SRP151137_GpC_DEG_E5.5)
@@ -510,8 +509,7 @@ SRP151137_E5.5_diff_data_choose <- SRP151137_E5.5_diff_data %>%
 SRP151137_E5.5_diff_data_choose$top10  <- FALSE
 SRP151137_E5.5_diff_data_choose$top10[1:10] <- TRUE  # 前10行标记为TRUE
 SRP151137_E5.5_diff_data_choose_p <- SRP151137_E5.5_diff_data_choose %>%
-  # filter(CpG_p.value <= 0.5 & GpC_p.value <= 0.5)
-  filter(avg_value <= 0.5)
+  filter(avg_value <= 0.05 & logFC > 0)
 
 
 SRP151137_E6.5_diff_data <- gene_DEG_diff_plot(SRP151137_CpG_DEG_E6.5,SRP151137_GpC_DEG_E6.5)
@@ -521,8 +519,7 @@ SRP151137_E6.5_diff_data_choose <- SRP151137_E6.5_diff_data %>%
 SRP151137_E6.5_diff_data_choose$top10  <- FALSE
 SRP151137_E6.5_diff_data_choose$top10[1:10] <- TRUE  # 前10行标记为TRUE
 SRP151137_E6.5_diff_data_choose_p <- SRP151137_E6.5_diff_data_choose %>%
-  # filter(CpG_p.value <= 0.5 & GpC_p.value <= 0.5)
-  filter(avg_value <= 0.5)
+  filter(avg_value <= 0.05 & logFC > 0)
 
 # save.image("SRP151137_plot/Gene_fisher_DEG.RData")
 
