@@ -15,7 +15,7 @@ install_github("Medinfo-Lab/sciTEA")
 
 If you prefer to build the package by hand, follow these steps:
 
-- Make sure that you have the dependencies from CRAN ("dply","reticulate","utils","png")
+- Make sure that you have the dependencies from CRAN ("dplyr","reticulate","utils","png","data.table")
 
 - Download and build from source:
 
