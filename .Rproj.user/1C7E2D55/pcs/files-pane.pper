@@ -1,10 +1,9 @@
 {
+    "path": "E:/_SpaceSubject/R/github/scMethyCA/R",
     "sortOrder": [
         {
             "columnIndex": 2,
             "ascending": true
         }
-    ],
-    "path": "E:/_SpaceSubject/R/R_package"
-    "path": "E:/_SpaceSubject/R/github/scMethyCA"
+    ]
 }
