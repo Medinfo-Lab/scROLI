@@ -41,7 +41,7 @@ R CMD INSTALL sciTEA-0.1.2.tar.gz
 
 ```R
 library(sciTEA)
-library(dply)
+library(dplyr)
 library(data.table)
 
 #First provide a coverage data, bed data and chromosome data
