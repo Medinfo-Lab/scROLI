@@ -373,7 +373,6 @@ enrichplot::dotplot(ego,
 
 #GpC DEG----
 # SRP151137_GpC_DEG <- Meth_group_variance_analysis(SRP151137_GpC_methlevel_choose_mean,SRP151137_Epis_sample$group1)
-# write.csv(SRP151137_GpC_DEG,"SRP151137_plot/encode_data/SRP151137_GpC_DEG.csv")
 
 
 
@@ -481,34 +480,46 @@ ggplot(volcano_data, aes(x = logFC, y = log_pval, colour = direction)) +
 
 
 #CpG GpC DEG diff methlevel----
-SRP151137_E4.5_diff_data <- gene_DEG_diff_plot(SRP151137_CpG_DEG_E4.5,SRP151137_GpC_DEG_E4.5)
+SRP151137_E4.5_diff_data <- DEG_diff_plot(SRP151137_CpG_DEG_E4.5,SRP151137_GpC_DEG_E4.5)
 SRP151137_E4.5_diff_data_choose <- SRP151137_E4.5_diff_data %>%
-  mutate(avg_value = (GpC_p.value + CpG_p.value)/2) %>%
-  arrange(avg_value)
+  mutate(avg_p.value = (GpC_p.value + CpG_p.value)/2) %>%
+  arrange(avg_p.value)
+# SRP151137_E4.5_diff_data_choose <- SRP151137_E4.5_diff_data %>%
+#   mutate(avg_logFC = (GpC_logFC + CpG_logFC)/2) %>%
+#   arrange(avg_logFC)
 SRP151137_E4.5_diff_data_choose$top10  <- FALSE
 SRP151137_E4.5_diff_data_choose$top10[1:10] <- TRUE  # 前10行标记为TRUE
 SRP151137_E4.5_diff_data_choose_p <- SRP151137_E4.5_diff_data_choose %>%
-  filter(avg_value <= 0.5 & logFC > 0)
+  # filter(avg_value <= 0.05 & logFC > 0)
+  filter(avg_p.value <= 0.5)
 
 
-SRP151137_E5.5_diff_data <- gene_DEG_diff_plot(SRP151137_CpG_DEG_E5.5,SRP151137_GpC_DEG_E5.5)
+SRP151137_E5.5_diff_data <- DEG_diff_plot(SRP151137_CpG_DEG_E5.5,SRP151137_GpC_DEG_E5.5)
 SRP151137_E5.5_diff_data_choose <- SRP151137_E5.5_diff_data %>%
-  mutate(avg_value = (GpC_p.value + CpG_p.value)/2) %>%
-  arrange(avg_value)
+  mutate(avg_p.value = (GpC_p.value + CpG_p.value)/2) %>%
+  arrange(avg_p.value)
+# SRP151137_E5.5_diff_data_choose <- SRP151137_E5.5_diff_data %>%
+#   mutate(avg_logFC = (GpC_logFC + CpG_logFC)/2) %>%
+#   arrange(avg_logFC)
 SRP151137_E5.5_diff_data_choose$top10  <- FALSE
 SRP151137_E5.5_diff_data_choose$top10[1:10] <- TRUE  # 前10行标记为TRUE
 SRP151137_E5.5_diff_data_choose_p <- SRP151137_E5.5_diff_data_choose %>%
-  filter(avg_value <= 0.5 & logFC > 0)
+  # filter(avg_value <= 0.05 & logFC > 0)
+  filter(avg_p.value <= 0.5)
 
 
-SRP151137_E6.5_diff_data <- gene_DEG_diff_plot(SRP151137_CpG_DEG_E6.5,SRP151137_GpC_DEG_E6.5)
+SRP151137_E6.5_diff_data <- DEG_diff_plot(SRP151137_CpG_DEG_E6.5,SRP151137_GpC_DEG_E6.5)
 SRP151137_E6.5_diff_data_choose <- SRP151137_E6.5_diff_data %>%
-  mutate(avg_value = (GpC_p.value + CpG_p.value)/2) %>%
-  arrange(avg_value)
+  mutate(avg_p.value = (GpC_p.value + CpG_p.value)/2) %>%
+  arrange(avg_p.value)
+# SRP151137_E6.5_diff_data_choose <- SRP151137_E6.5_diff_data %>%
+#   mutate(avg_logFC = (GpC_logFC + CpG_logFC)/2) %>%
+#   arrange(avg_logFC)
 SRP151137_E6.5_diff_data_choose$top10  <- FALSE
 SRP151137_E6.5_diff_data_choose$top10[1:10] <- TRUE  # 前10行标记为TRUE
 SRP151137_E6.5_diff_data_choose_p <- SRP151137_E6.5_diff_data_choose %>%
-  filter(avg_value <= 0.5 & logFC > 0)
+  # filter(avg_value <= 0.05 & logFC > 0)
+  filter(avg_p.value <= 0.5)
 
 
 
@@ -687,7 +698,8 @@ ch_index <- calinhara(coords, as.numeric(clustering))
 ch_index
 
 
-CH_SC <- read.csv("SRP151137_plot/encode_gene/CH_SC.csv")
+
+# CH_SC <- read.csv("SRP151137_plot/encode_gene/CH_SC.csv")
 
 ggplot(CH_SC, aes(x = type, y = CH.value)) +
   geom_bar(stat = "identity", position = position_dodge(0.8), width = 0.7, fill = "#4E79A7")+
@@ -738,7 +750,7 @@ cat("平均轮廓系数:", avg_sil_width, "\n")
 
 
 
-CH_SC <- read.csv("SRP151137_plot/encode_gene/CH_SC.csv")
+# CH_SC <- read.csv("SRP151137_plot/encode_gene/CH_SC.csv")
 
 ggplot(CH_SC, aes(x = type, y = SC.value)) +
   geom_bar(stat = "identity", position = position_dodge(0.8), width = 0.7, fill = "#4E79A7")+
