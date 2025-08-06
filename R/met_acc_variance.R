@@ -131,9 +131,9 @@ Meth_group_variance_analysis <- function(meth_data,UNmeth_data,group_data,suff){
   data_methsum_control_sum <- rowSums(data_methsum_control)
 
 
-  CpG_fisher <- data.frame(matrix(nrow = nrow(meth_data),ncol = 5))
+  CpG_fisher <- data.frame(matrix(nrow = nrow(meth_data),ncol = 3))
   rownames(CpG_fisher) <- rownames(meth_data)
-  colnames(CpG_fisher) <- c("P.value","adj_P.value_fdr","log10_adj_P.value_fdr","rate_diff","logFC")
+  colnames(CpG_fisher) <- c("P.value","adj_P.value_fdr","log10_adj_P.value_fdr")
 
 
   for (i in 1:nrow(CpG_fisher)) {
@@ -145,8 +145,6 @@ Meth_group_variance_analysis <- function(meth_data,UNmeth_data,group_data,suff){
     CpG_fisher[i,1] <- p$p.value
     CpG_fisher[i,2] <- p.adjust(p$p.value, method="fdr")
     CpG_fisher[i,3] <- -log10(p.adjust(p$p.value, method="fdr"))
-    CpG_fisher[i,4] <- ((meth_data_meth_target_sum[i]/data_methsum_target_sum[i])-(UNmeth_data_meth_control_sum[i]/data_methsum_control_sum[i]))*100
-    CpG_fisher[i,5] <- log2((meth_data_meth_target_sum[i]/data_methsum_target_sum[i])-(UNmeth_data_meth_control_sum[i]/data_methsum_control_sum[i]))
   }
   return(CpG_fisher)
 }
