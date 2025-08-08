@@ -23,9 +23,7 @@ SRP151137_GpC_meth_level_data <- read.csv("data/SRP151137/SRP151137_GpCgene_meth
 SRP151137_CpG_meth_data <- read.csv("data/SRP151137/SRP151137_CpGgene_meth.csv",row.names = 1)
 SRP151137_GpC_meth_data <- read.csv("data/SRP151137/SRP151137_GpCgene_meth.csv",row.names = 1)
 
-
 SRP151137_Epis_sample <- read.csv("data/SRP151137/sample/SRP151137_CpGGpC_RNA_sample_data.csv")
-# SRP151137_Epis_sample$Run_methlevel <- paste0(SRP151137_Epis_sample$Run, ".methlevel")
 
 SRP151137_CpG_methlevel <- Read_file_meth_colname(SRP151137_CpG_meth_level_data,"methlevel")
 SRP151137_GpC_methlevel <- Read_file_meth_colname(SRP151137_GpC_meth_level_data,"methlevel")
@@ -95,7 +93,6 @@ SRP151137_CpG_methlevel_choose_mean <- NA_padding_mean(SRP151137_CpG_methlevel_c
 SRP151137_CpG_methlevel_choose_mean_matrix <- as.matrix(SRP151137_CpG_methlevel_choose_mean)
 mofa_list <- list()
 mofa_list$file1 <- SRP151137_CpG_methlevel_choose_mean_matrix
-# SRP151137_CpG_mofa <- MOFA_est(mofa_list,group = SRP151137_Epis_sample_filter$group1)
 
 SRP151137_CpG_mofa <- create_mofa(mofa_list,group = SRP151137_Epis_sample$group1)
 
@@ -114,7 +111,6 @@ SRP151137_CpG_mofa <- prepare_mofa(SRP151137_CpG_mofa,
 
 SRP151137_CpG_mofa <- run_mofa(SRP151137_CpG_mofa)
 
-# SRP151137_CpG_mofa <- run_umap(SRP151137_CpG_mofa)
 SRP151137_CpG_mofa <- run_umap(SRP151137_CpG_mofa,
                                min_dist = 2,spread=3)
 
@@ -126,7 +122,6 @@ SRP151137_CpG_umap_data <- cbind(SRP151137_CpG_umap_data,SRP151137_CpG_mofa@samp
 colnames(SRP151137_CpG_umap_data)[4] <- "group"
 rownames(SRP151137_CpG_umap_data) <- 1:nrow(SRP151137_CpG_umap_data)
 
-# write.csv(SRP151137_CpG_umap_data,"SRP151137_plot/gene_data/SRP151137_CpGgene_umap_data.csv")
 
 ggplot(SRP151137_CpG_umap_data)+
   geom_point(SRP151137_CpG_umap_data,mapping=aes(UMAP1,UMAP2,color=group),size = 2.5,alpha = 0.7)+
@@ -148,7 +143,6 @@ SRP151137_GpC_methlevel_choose_mean <- NA_padding_mean(SRP151137_GpC_methlevel_c
 SRP151137_GpC_methlevel_choose_mean_matrix <- as.matrix(SRP151137_GpC_methlevel_choose_mean)
 mofa_list <- list()
 mofa_list$file1 <- SRP151137_GpC_methlevel_choose_mean_matrix
-# SRP151137_GpC_mofa <- MOFA_est(mofa_list,group = SRP151137_Epis_sample_filter$group1)
 
 SRP151137_GpC_mofa <- create_mofa(mofa_list,group = SRP151137_Epis_sample$group1)
 
@@ -167,7 +161,6 @@ SRP151137_GpC_mofa <- prepare_mofa(SRP151137_GpC_mofa,
 
 SRP151137_GpC_mofa <- run_mofa(SRP151137_GpC_mofa)
 
-# SRP151137_GpC_mofa <- run_umap(SRP151137_GpC_mofa,min_dist = 1,spread = 2)
 SRP151137_GpC_mofa <- run_umap(SRP151137_GpC_mofa,
                                min_dist = 2,spread=3)
 
@@ -178,8 +171,6 @@ SRP151137_GpC_umap_data <- SRP151137_GpC_mofa@dim_red$UMAP
 SRP151137_GpC_umap_data <- cbind(SRP151137_GpC_umap_data,SRP151137_GpC_mofa@samples_metadata$group)
 colnames(SRP151137_GpC_umap_data)[4] <- "group"
 rownames(SRP151137_GpC_umap_data) <- 1:nrow(SRP151137_GpC_umap_data)
-
-# write.csv(SRP151137_GpC_umap_data,"SRP151137_plot/gene_data/SRP151137_GpCgene_umap_data.csv")
 
 
 ggplot(SRP151137_GpC_umap_data)+
@@ -196,11 +187,10 @@ ggplot(SRP151137_GpC_umap_data)+
                      values = c("#761C78","#5B6C2F","#4682B4"))
 
 
-# load("SRP151137_plot/Gene_fisher_DEG.RData")
 
 #CpG DEG----
 SRP151137_CpG_DEG <- Methlevel_group_variance_analysis(SRP151137_CpG_methlevel_choose_mean,SRP151137_Epis_sample$group1)
-# write.csv(SRP151137_CpG_DEG,"SRP151137_plot/gene_data/SRP151137_CpG_DEG.csv")
+
 SRP151137_CpG_DEG_gene <- merge(
   SRP151137_CpG_DEG,
   GRCm38_data_paste,
@@ -262,8 +252,6 @@ SRP151137_CpG_DEG_P_E6.5 <- SRP151137_CpG_DEG_E6.5 %>%
 
 SRP151137_CpG_DEG_gene_P <- SRP151137_CpG_DEG_gene %>%
   filter(P.value < 0.05)
-# write.csv(SRP151137_CpG_DEG_P,"SRP151137_plot/gene_data/SRP151137_CpG_DEG_P0.05.csv")
-table(SRP151137_CpG_DEG_gene_P$group)
 
 SRP151137_CpG_DEG_gene_P %>%
   group_by(group) %>%
@@ -362,7 +350,6 @@ dotplot(ego,
 
 #GpC DEG----
 SRP151137_GpC_DEG <- Methlevel_group_variance_analysis(SRP151137_GpC_methlevel_choose_mean,SRP151137_Epis_sample$group1)
-# write.csv(SRP151137_GpC_DEG,"SRP151137_plot/gene_data/SRP151137_GpC_DEG.csv")
 SRP151137_GpC_DEG_gene <- merge(
   SRP151137_GpC_DEG,
   GRCm38_data_paste,
@@ -534,9 +521,6 @@ SRP151137_E6.5_diff_data_choose_p <- SRP151137_E6.5_diff_data_choose %>%
   filter(avg_p.value <= 0.5)
 
 
-# save.image("SRP151137_plot/Gene_fisher_DEG.RData")
-
-
 
 ggplot_data <- SRP151137_E4.5_diff_data_choose_p
 
@@ -659,8 +643,8 @@ ggplot(SRP151137_GpC_methlevel_choose_colmean,
 
 
 #Venn genes----
-load("SRP151137_plot/RNA_markers.RData")
-# load("SRP151137_plot/Gene_All_Meth.RData")
+load("RNA_markers.RData")
+# load("Gene_All_Meth.RData")
 
 SRP151137_pbmc_markers_E4.5 <- SRP151137_pbmc_markers_result %>%
   filter(cluster == "E4.5")
@@ -812,9 +796,6 @@ avg_sil_width <- mean(sil[, "sil_width"])
 cat("平均轮廓系数:", avg_sil_width, "\n")
 
 
-
-
-# CH_SC <- read.csv("SRP151137_plot/CH_SC.csv")
 
 ggplot(CH_SC, aes(x = type, y = SC.value)) +
   geom_bar(stat = "identity", position = position_dodge(0.8), width = 0.5, fill = "#4E79A7")+
