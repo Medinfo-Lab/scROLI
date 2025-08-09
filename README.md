@@ -65,7 +65,6 @@ CPU_cores <- 10
 for (i in 1:length(merge_coverage)) {
   start_time <- Sys.time()
   lines <- readLines(merge_coverage[i], warn = FALSE)
-  # lines
   if (length(lines)<1) {
     message("Skip empty files: ", merge_coverage[i])
     next
@@ -91,7 +90,6 @@ for (i in 1:length(merge_coverage)) {
 for (i in 1:length(merge_coverage)) {
   start_time <- Sys.time()
   lines <- readLines(merge_coverage[i], warn = FALSE)
-  # lines
   if (length(lines)<1) {
     message("Skip empty files: ", merge_coverage[i])
     next
@@ -112,6 +110,10 @@ for (i in 1:length(merge_coverage)) {
   cat(i,"bed data ",merge_coverage[i],'\n')
   cat("File processing time:", round(Sys.time() - start_time, 1), "秒\n")
 }
+                             
+bed_data_paste_methlevel_methleveldata <- Read_file_meth_colname(bed_data_paste_methlevel,"methlevel")
+bed_data_paste_meth_methdata <- Read_file_meth_colname(bed_data_paste_meth,"meth")
+bed_data_paste_meth_UNmethdata <- Read_file_meth_colname(bed_data_paste_meth,"UNmeth")
 ```
 
 
